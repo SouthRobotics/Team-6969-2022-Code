@@ -7,6 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.Subsystems.SwerveSystem;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,10 +22,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
+  
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+
+
+  private SwerveSystem swerveSubsystem = new SwerveSystem();
+  private Joystick driverJoytick = new Joystick(OIConstants.const_DriverControllerPort);
+ 
+
+  private SlewRateLimiter xLimiter = new SlewRateLimiter(DriveConstants.const_TeleDriveMaxAccelerationUnitsPerSecond);
+  private SlewRateLimiter yLimiter = new SlewRateLimiter(DriveConstants.const_TeleDriveMaxAccelerationUnitsPerSecond);
+  private SlewRateLimiter turningLimiter = new SlewRateLimiter(DriveConstants.const_TeleDriveMaxAngularAccelerationUnitsPerSecond);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -29,6 +48,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+
   }
 
   /**
@@ -74,11 +95,43 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+
+    
+  }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+   
+     // 1. Get real-time joystick inputs
+     double xSpeed = driverJoytick.getRawAxis(OIConstants.const_DriverYAxis);
+     double ySpeed = driverJoytick.getRawAxis(OIConstants.const_DriverXAxis);
+     double turningSpeed = driverJoytick.getRawAxis(OIConstants.const_DriverRotAxis);
+
+     // 2. Apply deadband
+     xSpeed = Math.abs(xSpeed) > OIConstants.const_Deadband ? xSpeed : 0.0;
+     ySpeed = Math.abs(ySpeed) > OIConstants.const_Deadband ? ySpeed : 0.0;
+     turningSpeed = Math.abs(turningSpeed) > OIConstants.const_Deadband ? turningSpeed : 0.0;
+
+     // 3. Make the driving smoother
+     xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.const_TeleDriveMaxSpeedMetersPerSecond;
+     ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.const_TeleDriveMaxSpeedMetersPerSecond;
+     turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.const_TeleDriveMaxAngularSpeedRadiansPerSecond;
+
+     // 4. Construct desired chassis speeds
+     ChassisSpeeds chassisSpeeds;
+     // Relative to field
+     chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+
+     // 5. Convert chassis speeds to individual module states
+     SwerveModuleState[] moduleStates = DriveConstants.const_DriveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+     // 6. Output each module states to wheels
+     swerveSubsystem.setModuleStates(moduleStates);
+
+
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
