@@ -12,6 +12,9 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
+
+import java.text.DecimalFormat;
+
 import com.ctre.phoenix.motorcontrol.*;
 
 
@@ -61,27 +64,42 @@ public class SwerveModule {
     }
 
     public double getTurningPosition() {
-        return turningMotor.getSelectedSensorPosition();
+        double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
+        angle *= 2.0 * Math.PI;
+        angle -= absoluteEncoderOffsetRad;
+        angle *= (absoluteEncoderReversed ? -1.0 : 1.0);
+        if(angle<0){
+            angle = 2*Math.PI - (-1*angle);
+        }
+        else if(angle > 2*Math.PI) {
+
+            angle = angle - 2*Math.PI;
+        }
+
+        angle -= Math.PI;
+        DecimalFormat df = new DecimalFormat("#.##");
+        angle = Double.valueOf(df.format(angle));
+        return angle;
     }
 
     public double getDriveVelocity() {
         return driveEncoder.getVelocity();
     }
 
-    public double getTurningVelocity() {
+   /** public double getTurningVelocity() {
         return turningMotor.getSelectedSensorVelocity();
     }
-
+ 
     public double getAbsoluteEncoderRad() {
         double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }
-
+*/
     public void resetEncoders() {
         driveEncoder.setPosition(0);
-        turningMotor.setSelectedSensorPosition(getAbsoluteEncoderRad());
+        
     }
 
     public SwerveModuleState getState() {
@@ -90,6 +108,8 @@ public class SwerveModule {
 
     public void setDesiredState(SwerveModuleState state) {
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
+            SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " state", state.toString());
+            SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " angle", String.valueOf(getTurningPosition()));
             stop();
             return;
         }
@@ -97,9 +117,12 @@ public class SwerveModule {
         driveMotor.set(state.speedMetersPerSecond / DriveConstants.const_PhysicalMaxSpeedMetersPerSecond);
 
         //turningMotor.set(ControlMode.PercentOutput);
+        double test = turningPidController.calculate(getTurningPosition(), state.angle.getRadians());
+        SmartDashboard.putNumber("test" + absoluteEncoder.getChannel(), test);
 
-        turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
-        SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+        turningMotor.set(ControlMode.PercentOutput, test);
+        SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " state", state.toString());
+        SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " angle", String.valueOf(getTurningPosition()));
     }
 
     public void stop() {

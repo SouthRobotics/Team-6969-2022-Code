@@ -15,6 +15,9 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Subsystems.SwerveSystem;
 import edu.wpi.first.wpilibj.Joystick;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -32,6 +35,8 @@ public class Robot extends TimedRobot {
 
   private SwerveSystem swerveSubsystem = new SwerveSystem();
   private Joystick driverJoytick = new Joystick(OIConstants.const_DriverControllerPort);
+
+  //private final TalonSRX testMotor = new TalonSRX(8);
  
 
   private SlewRateLimiter xLimiter = new SlewRateLimiter(DriveConstants.const_TeleDriveMaxAccelerationUnitsPerSecond);
@@ -105,8 +110,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
    
      // 1. Get real-time joystick inputs
-     double xSpeed = driverJoytick.getRawAxis(OIConstants.const_DriverYAxis);
-     double ySpeed = driverJoytick.getRawAxis(OIConstants.const_DriverXAxis);
+     double xSpeed = -1* driverJoytick.getRawAxis(OIConstants.const_DriverXAxis);
+     //testMotor.set(ControlMode.PercentOutput, xSpeed);
+
+     double ySpeed = -1* driverJoytick.getRawAxis(OIConstants.const_DriverYAxis);
      double turningSpeed = driverJoytick.getRawAxis(OIConstants.const_DriverRotAxis);
 
      // 2. Apply deadband
@@ -122,13 +129,18 @@ public class Robot extends TimedRobot {
      // 4. Construct desired chassis speeds
      ChassisSpeeds chassisSpeeds;
      // Relative to field
-     chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+     //chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+
+     // Relative to robot
+     chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
 
      // 5. Convert chassis speeds to individual module states
      SwerveModuleState[] moduleStates = DriveConstants.const_DriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
      // 6. Output each module states to wheels
      swerveSubsystem.setModuleStates(moduleStates);
+     
+     swerveSubsystem.periodic();
 
 
   }

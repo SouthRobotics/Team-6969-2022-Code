@@ -15,7 +15,7 @@ public class Constants {
         public static final double const_TurningEncoderRot2Rad = const_TurningMotorGearRatio * 2 * Math.PI;
         public static final double const_DriveEncoderRPM2MeterPerSec = const_DriveEncoderRot2Meter / 60;
         public static final double const_TurningEncoderRPM2RadPerSec = const_TurningEncoderRot2Rad / 60;
-        public static final double const_PTurning = 0.5;
+        public static final double const_PTurning = .25;
     }
 
     public static final class DriveConstants {
@@ -30,15 +30,15 @@ public class Constants {
                 new Translation2d(-const_WheelBase / 2, -const_TrackWidth / 2),
                 new Translation2d(-const_WheelBase / 2, const_TrackWidth / 2));
 
-        public static final int const_FrontLeftDriveMotorPort = 8;
-        public static final int const_BackLeftDriveMotorPort = 2;
-        public static final int const_FrontRightDriveMotorPort = 6;
+        public static final int const_FrontLeftDriveMotorPort = 2;
+        public static final int const_BackLeftDriveMotorPort = 3;
+        public static final int const_FrontRightDriveMotorPort = 1;
         public static final int const_BackRightDriveMotorPort = 4;
 
-        public static final int const_FrontLeftTurningMotorPort = 7;
-        public static final int const_BackLeftTurningMotorPort = 1;
+        public static final int const_FrontLeftTurningMotorPort = 13;
+        public static final int const_BackLeftTurningMotorPort = 16;
         public static final int const_FrontRightTurningMotorPort = 5;
-        public static final int const_BackRightTurningMotorPort = 3;
+        public static final int const_BackRightTurningMotorPort = 12;
 
         public static final boolean const_FrontLeftTurningEncoderReversed = true;
         public static final boolean const_BackLeftTurningEncoderReversed = true;
@@ -51,30 +51,30 @@ public class Constants {
         public static final boolean const_BackRightDriveEncoderReversed = false;
 
         public static final int const_FrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final int const_BackLeftDriveAbsoluteEncoderPort = 2;
-        public static final int const_FrontRightDriveAbsoluteEncoderPort = 1;
-        public static final int const_BackRightDriveAbsoluteEncoderPort = 3;
+        public static final int const_BackLeftDriveAbsoluteEncoderPort = 1;
+        public static final int const_FrontRightDriveAbsoluteEncoderPort = 3;
+        public static final int const_BackRightDriveAbsoluteEncoderPort = 2; 
 
         public static final boolean const_FrontLeftDriveAbsoluteEncoderReversed = false;
         public static final boolean const_BackLeftDriveAbsoluteEncoderReversed = false;
         public static final boolean const_FrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean const_BackRightDriveAbsoluteEncoderReversed = false;
 
-        public static final double const_FrontLeftDriveAbsoluteEncoderOffsetRad = 1; //need to set
-        public static final double const_BackLeftDriveAbsoluteEncoderOffsetRad = 1; //need to set
-        public static final double const_FrontRightDriveAbsoluteEncoderOffsetRad = 1; //need to set
-        public static final double const_BackRightDriveAbsoluteEncoderOffsetRad = 1; //need to set
+        public static final double const_FrontLeftDriveAbsoluteEncoderOffsetRad = 1.49; //0
+        public static final double const_BackLeftDriveAbsoluteEncoderOffsetRad = 4.43; //1
+        public static final double const_FrontRightDriveAbsoluteEncoderOffsetRad = 1.744; //3
+        public static final double const_BackRightDriveAbsoluteEncoderOffsetRad = .678; //2
 
         public static final double const_PhysicalMaxSpeedMetersPerSecond = 8;
         public static final double const_PhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
         public static final double const_TeleDriveMaxSpeedMetersPerSecond = const_PhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double const_TeleDriveMaxAngularSpeedRadiansPerSecond = const_PhysicalMaxAngularSpeedRadiansPerSecond / 4;
+        public static final double const_TeleDriveMaxAngularSpeedRadiansPerSecond = const_PhysicalMaxAngularSpeedRadiansPerSecond/4 ;
         public static final double const_TeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double const_TeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+        public static final double const_TeleDriveMaxAngularAccelerationUnitsPerSecond = 6;
     }
 
-    public static final class AutoConstants {
+    /**public static final class AutoConstants {
         public static final double const_MaxSpeedMetersPerSecond = DriveConstants.const_PhysicalMaxSpeedMetersPerSecond / 4;
         public static final double const_MaxAngularSpeedRadiansPerSecond = DriveConstants.const_PhysicalMaxAngularSpeedRadiansPerSecond / 10;
         public static final double const_MaxAccelerationMetersPerSecondSquared = 3;
@@ -88,14 +88,15 @@ public class Constants {
                         const_MaxAngularSpeedRadiansPerSecond,
                         const_MaxAngularAccelerationRadiansPerSecondSquared);
     }
+    */
 
     public static final class OIConstants {
         public static final int const_DriverControllerPort = 0;
 
-        public static final int const_DriverYAxis = 1;
-        public static final int const_DriverXAxis = 0;
-        public static final int const_DriverRotAxis = 4;
-        public static final int const_DriverFieldOrientedButtonIdx = 1;
+        public static final int const_DriverYAxis = 0;
+        public static final int const_DriverXAxis = 1;
+        public static final int const_DriverRotAxis = 2;
+        
 
         public static final double const_Deadband = 0.05;
     }
