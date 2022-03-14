@@ -15,7 +15,9 @@ public class Constants {
         public static final double const_TurningEncoderRot2Rad = const_TurningMotorGearRatio * 2 * Math.PI;
         public static final double const_DriveEncoderRPM2MeterPerSec = const_DriveEncoderRot2Meter / 60;
         public static final double const_TurningEncoderRPM2RadPerSec = const_TurningEncoderRot2Rad / 60;
-        public static final double const_PTurning = .25;
+        public static final double const_PTurning = 25;
+        public static final double const_ITurning = 0;
+        public static final double const_DTurning = 0;
     }
 
     public static final class DriveConstants {
@@ -93,8 +95,8 @@ public class Constants {
     public static final class OIConstants {
         public static final int const_DriverControllerPort = 0;
 
-        public static final int const_DriverYAxis = 0;
-        public static final int const_DriverXAxis = 1;
+        public static final int const_DriverYAxis = 1;
+        public static final int const_DriverXAxis = 0;
         public static final int const_DriverRotAxis = 2;
         
 

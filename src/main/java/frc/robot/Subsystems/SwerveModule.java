@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
+import edu.wpi.first.math.MathUtil;
 
 import java.text.DecimalFormat;
 
@@ -53,7 +54,7 @@ public class SwerveModule {
         driveEncoder.setPositionConversionFactor(ModuleConstants.const_DriveEncoderRot2Meter);
         driveEncoder.setVelocityConversionFactor(ModuleConstants.const_DriveEncoderRPM2MeterPerSec);
 
-        turningPidController = new PIDController(ModuleConstants.const_PTurning, 0, 0);
+        turningPidController = new PIDController(ModuleConstants.const_PTurning, ModuleConstants.const_ITurning, ModuleConstants.const_DTurning);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
         resetEncoders();
@@ -77,7 +78,7 @@ public class SwerveModule {
         }
 
         angle -= Math.PI;
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.#");
         angle = Double.valueOf(df.format(angle));
         return angle;
     }
@@ -109,7 +110,7 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState state) {
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " state", state.toString());
-            SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " angle", String.valueOf(getTurningPosition()));
+            SmartDashboard.putNumber("Swerve" + absoluteEncoder.getChannel() + " angle", getTurningPosition());
             stop();
             return;
         }
@@ -117,12 +118,12 @@ public class SwerveModule {
         driveMotor.set(state.speedMetersPerSecond / DriveConstants.const_PhysicalMaxSpeedMetersPerSecond);
 
         //turningMotor.set(ControlMode.PercentOutput);
-        double test = turningPidController.calculate(getTurningPosition(), state.angle.getRadians());
+        double test = MathUtil.clamp(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()), -1, 1);
         SmartDashboard.putNumber("test" + absoluteEncoder.getChannel(), test);
 
         turningMotor.set(ControlMode.PercentOutput, test);
         SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " state", state.toString());
-        SmartDashboard.putString("Swerve" + absoluteEncoder.getChannel() + " angle", String.valueOf(getTurningPosition()));
+        SmartDashboard.putNumber("Swerve" + absoluteEncoder.getChannel() + " angle", getTurningPosition());
     }
 
     public void stop() {
