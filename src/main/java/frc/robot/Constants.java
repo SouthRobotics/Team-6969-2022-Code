@@ -27,10 +27,14 @@ public class Constants {
         public static final double const_WheelBase = Units.inchesToMeters(29.11);
         
         public static final SwerveDriveKinematics const_DriveKinematics = new SwerveDriveKinematics(
-                new Translation2d(const_WheelBase / 2, -const_TrackWidth / 2),
+                //FrontLeft
                 new Translation2d(const_WheelBase / 2, const_TrackWidth / 2),
-                new Translation2d(-const_WheelBase / 2, -const_TrackWidth / 2),
-                new Translation2d(-const_WheelBase / 2, const_TrackWidth / 2));
+                //FrontRight
+                new Translation2d(const_WheelBase / 2, -const_TrackWidth / 2),
+                //BackLeft
+                new Translation2d(-const_WheelBase / 2, const_TrackWidth / 2),
+                //BackRight
+                new Translation2d(-const_WheelBase / 2, -const_TrackWidth / 2));
 
         public static final int const_FrontLeftDriveMotorPort = 2;
         public static final int const_BackLeftDriveMotorPort = 3;
