@@ -13,40 +13,40 @@ import frc.robot.Constants.DriveConstants;
 
 public class SwerveSystem extends SubsystemBase {
     private final SwerveModule frontLeft = new SwerveModule(
-            DriveConstants.const_FrontLeftDriveMotorPort,
-            DriveConstants.const_FrontLeftTurningMotorPort,
-            DriveConstants.const_FrontLeftDriveEncoderReversed,
-            DriveConstants.const_FrontLeftTurningEncoderReversed,
-            DriveConstants.const_FrontLeftDriveAbsoluteEncoderPort,
-            DriveConstants.const_FrontLeftDriveAbsoluteEncoderOffsetRad,
-            DriveConstants.const_FrontLeftDriveAbsoluteEncoderReversed);
+            DriveConstants.Swerve_FL.const_DriveMotorPort,
+            DriveConstants.Swerve_FL.const_TurningMotorPort,
+            DriveConstants.Swerve_FL.const_DriveMotorReversed,
+            DriveConstants.Swerve_FL.const_TurningMotorReversed,
+            DriveConstants.Swerve_FL.const_AbsoluteEncoderPort,
+            DriveConstants.Swerve_FL.const_AbsoluteEncoderOffsetRad,
+            DriveConstants.Swerve_FL.const_AbsoluteEncoderReversed);
 
     private final SwerveModule frontRight = new SwerveModule(
-            DriveConstants.const_FrontRightDriveMotorPort,
-            DriveConstants.const_FrontRightTurningMotorPort,
-            DriveConstants.const_FrontRightDriveEncoderReversed,
-            DriveConstants.const_FrontRightTurningEncoderReversed,
-            DriveConstants.const_FrontRightDriveAbsoluteEncoderPort,
-            DriveConstants.const_FrontRightDriveAbsoluteEncoderOffsetRad,
-            DriveConstants.const_FrontRightDriveAbsoluteEncoderReversed);
+            DriveConstants.Swerve_FR.const_DriveMotorPort,
+            DriveConstants.Swerve_FR.const_TurningMotorPort,
+            DriveConstants.Swerve_FR.const_DriveMotorReversed,
+            DriveConstants.Swerve_FR.const_TurningMotorReversed,
+            DriveConstants.Swerve_FR.const_AbsoluteEncoderPort,
+            DriveConstants.Swerve_FR.const_AbsoluteEncoderOffsetRad,
+            DriveConstants.Swerve_FR.const_AbsoluteEncoderReversed);
 
     private final SwerveModule backLeft = new SwerveModule(
-            DriveConstants.const_BackLeftDriveMotorPort,
-            DriveConstants.const_BackLeftTurningMotorPort,
-            DriveConstants.const_BackLeftDriveEncoderReversed,
-            DriveConstants.const_BackLeftTurningEncoderReversed,
-            DriveConstants.const_BackLeftDriveAbsoluteEncoderPort,
-            DriveConstants.const_BackLeftDriveAbsoluteEncoderOffsetRad,
-            DriveConstants.const_BackLeftDriveAbsoluteEncoderReversed);
+            DriveConstants.Swerve_BL.const_DriveMotorPort,
+            DriveConstants.Swerve_BL.const_TurningMotorPort,
+            DriveConstants.Swerve_BL.const_DriveMotorReversed,
+            DriveConstants.Swerve_BL.const_TurningMotorReversed,
+            DriveConstants.Swerve_BL.const_AbsoluteEncoderPort,
+            DriveConstants.Swerve_BL.const_AbsoluteEncoderOffsetRad,
+            DriveConstants.Swerve_BL.const_AbsoluteEncoderReversed);
 
     private final SwerveModule backRight = new SwerveModule(
-            DriveConstants.const_BackRightDriveMotorPort,
-            DriveConstants.const_BackRightTurningMotorPort,
-            DriveConstants.const_BackRightDriveEncoderReversed,
-            DriveConstants.const_BackRightTurningEncoderReversed,
-            DriveConstants.const_BackRightDriveAbsoluteEncoderPort,
-            DriveConstants.const_BackRightDriveAbsoluteEncoderOffsetRad,
-            DriveConstants.const_BackRightDriveAbsoluteEncoderReversed);
+            DriveConstants.Swerve_BR.const_DriveMotorPort,
+            DriveConstants.Swerve_BR.const_TurningMotorPort,
+            DriveConstants.Swerve_BR.const_DriveMotorReversed,
+            DriveConstants.Swerve_BR.const_TurningMotorReversed,
+            DriveConstants.Swerve_BR.const_AbsoluteEncoderPort,
+            DriveConstants.Swerve_BR.const_AbsoluteEncoderOffsetRad,
+            DriveConstants.Swerve_BR.const_AbsoluteEncoderReversed);
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.const_DriveKinematics, new Rotation2d(0));

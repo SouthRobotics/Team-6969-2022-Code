@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Subsystems.BallHandler;
 import frc.robot.Subsystems.SwerveSystem;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -34,6 +35,7 @@ public class Robot extends TimedRobot {
 
 
   private SwerveSystem swerveSubsystem = new SwerveSystem();
+  private BallHandler BallSubsystem = new BallHandler();
   private Joystick driverJoytick = new Joystick(OIConstants.const_DriverControllerPort);
 
   //private final TalonSRX testMotor = new TalonSRX(8);
@@ -110,10 +112,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
    
      // 1. Get real-time joystick inputs
-     double xSpeed = -1* driverJoytick.getRawAxis(OIConstants.const_DriverXAxis);
+     double xSpeed = driverJoytick.getRawAxis(OIConstants.const_DriverXAxis);
      //testMotor.set(ControlMode.PercentOutput, xSpeed);
 
-     double ySpeed = -1* driverJoytick.getRawAxis(OIConstants.const_DriverYAxis);
+     double ySpeed = driverJoytick.getRawAxis(OIConstants.const_DriverYAxis);
      double turningSpeed = driverJoytick.getRawAxis(OIConstants.const_DriverRotAxis);
 
      // 2. Apply deadband
@@ -128,11 +130,12 @@ public class Robot extends TimedRobot {
 
      // 4. Construct desired chassis speeds
      ChassisSpeeds chassisSpeeds;
+
      // Relative to field
-     //chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+     chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
 
      // Relative to robot
-     chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+     //chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
 
      // 5. Convert chassis speeds to individual module states
      SwerveModuleState[] moduleStates = DriveConstants.const_DriveKinematics.toSwerveModuleStates(chassisSpeeds);

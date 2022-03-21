@@ -20,6 +20,18 @@ public class Constants {
         public static final double const_DTurning = 0;
     }
 
+    public static final class BallHandlerConstants {
+        public static final double const_HoodAngleOffset= 0; //set
+        public static final double const_HoodAngleMax= 90; //set
+        public static final double const_IntakeStowAngle= 0;
+        public static final double const_IntakeDeployAngle = 90; //set
+        public static final double const_LauncherWheelDiamIN = 4; //set
+        public static final int const_Ball1Input = 0; //set
+        public static final int const_Ball2Input = 0; //set
+        public static final double const_ConveyerSpeedPercent = .5; //set
+        public static final double const_IntakeSpeedPercent = .5; //set
+    }
+
     public static final class DriveConstants {
         // Distance between right and left wheels
         public static final double const_TrackWidth = Units.inchesToMeters(19);
@@ -36,40 +48,47 @@ public class Constants {
                 //BackRight
                 new Translation2d(-const_WheelBase / 2, -const_TrackWidth / 2));
 
-        public static final int const_FrontLeftDriveMotorPort = 2;
-        public static final int const_BackLeftDriveMotorPort = 3;
-        public static final int const_FrontRightDriveMotorPort = 1;
-        public static final int const_BackRightDriveMotorPort = 4;
 
-        public static final int const_FrontLeftTurningMotorPort = 13;
-        public static final int const_BackLeftTurningMotorPort = 16;
-        public static final int const_FrontRightTurningMotorPort = 5;
-        public static final int const_BackRightTurningMotorPort = 12;
+        
+        public static final String[] swerveID =  {"FL", "FR", "BL", "BR", };
 
-        public static final boolean const_FrontLeftTurningEncoderReversed = true;
-        public static final boolean const_BackLeftTurningEncoderReversed = true;
-        public static final boolean const_FrontRightTurningEncoderReversed = true;
-        public static final boolean const_BackRightTurningEncoderReversed = true;
+        public static final class Swerve_FL {
+            public static final int const_DriveMotorPort = 2;
+            public static final int const_TurningMotorPort = 13;
+            public static final boolean const_TurningMotorReversed = true;
+            public static final boolean const_DriveMotorReversed = false;
+            public static final int const_AbsoluteEncoderPort = 0;
+            public static final boolean const_AbsoluteEncoderReversed = false;
+            public static final double const_AbsoluteEncoderOffsetRad = 1.49;
+        }
+        public static final class Swerve_FR {
+            public static final int const_DriveMotorPort = 3;
+            public static final int const_TurningMotorPort = 16;
+            public static final boolean const_TurningMotorReversed = true;
+            public static final boolean const_DriveMotorReversed = false;
+            public static final int const_AbsoluteEncoderPort = 1;
+            public static final boolean const_AbsoluteEncoderReversed = false;
+            public static final double const_AbsoluteEncoderOffsetRad = 4.43;
+        }
+        public static final class Swerve_BL {
+            public static final int const_DriveMotorPort = 1;
+            public static final int const_TurningMotorPort = 5;
+            public static final boolean const_TurningMotorReversed = true;
+            public static final boolean const_DriveMotorReversed = false;
+            public static final int const_AbsoluteEncoderPort = 3;
+            public static final boolean const_AbsoluteEncoderReversed = false;
+            public static final double const_AbsoluteEncoderOffsetRad = 1.744;
+        }
+        public static final class Swerve_BR {
+            public static final int const_DriveMotorPort = 4;
+            public static final int const_TurningMotorPort = 12;
+            public static final boolean const_TurningMotorReversed = true;
+            public static final boolean const_DriveMotorReversed = false;
+            public static final int const_AbsoluteEncoderPort = 2;
+            public static final boolean const_AbsoluteEncoderReversed = false;
+            public static final double const_AbsoluteEncoderOffsetRad = .678;
+        }
 
-        public static final boolean const_FrontLeftDriveEncoderReversed = true;
-        public static final boolean const_BackLeftDriveEncoderReversed = true;
-        public static final boolean const_FrontRightDriveEncoderReversed = false;
-        public static final boolean const_BackRightDriveEncoderReversed = false;
-
-        public static final int const_FrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final int const_BackLeftDriveAbsoluteEncoderPort = 1;
-        public static final int const_FrontRightDriveAbsoluteEncoderPort = 3;
-        public static final int const_BackRightDriveAbsoluteEncoderPort = 2; 
-
-        public static final boolean const_FrontLeftDriveAbsoluteEncoderReversed = false;
-        public static final boolean const_BackLeftDriveAbsoluteEncoderReversed = false;
-        public static final boolean const_FrontRightDriveAbsoluteEncoderReversed = false;
-        public static final boolean const_BackRightDriveAbsoluteEncoderReversed = false;
-
-        public static final double const_FrontLeftDriveAbsoluteEncoderOffsetRad = 1.49; //0
-        public static final double const_BackLeftDriveAbsoluteEncoderOffsetRad = 4.43; //1
-        public static final double const_FrontRightDriveAbsoluteEncoderOffsetRad = 1.744; //3
-        public static final double const_BackRightDriveAbsoluteEncoderOffsetRad = .678; //2
 
         public static final double const_PhysicalMaxSpeedMetersPerSecond = 8;
         public static final double const_PhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
