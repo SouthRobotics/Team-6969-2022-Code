@@ -15,21 +15,47 @@ public class Constants {
         public static final double const_TurningEncoderRot2Rad = const_TurningMotorGearRatio * 2 * Math.PI;
         public static final double const_DriveEncoderRPM2MeterPerSec = const_DriveEncoderRot2Meter / 60;
         public static final double const_TurningEncoderRPM2RadPerSec = const_TurningEncoderRot2Rad / 60;
-        public static final double const_PTurning = 25;
+        public static final double const_PTurning = .01;
         public static final double const_ITurning = 0;
-        public static final double const_DTurning = 0;
+        public static final double const_DTurning = .05;
+    }
+
+    public static final class ClimberConstants {
+        public static final int const_ClimberId = 14;
     }
 
     public static final class BallHandlerConstants {
         public static final double const_HoodAngleOffset= 0; //set
         public static final double const_HoodAngleMax= 90; //set
+        public static final double const_HoodAngleRatio= 4.125;
+
         public static final double const_IntakeStowAngle= 0;
         public static final double const_IntakeDeployAngle = 90; //set
-        public static final double const_LauncherWheelDiamIN = 4; //set
+        public static final double const_LauncherWheelDiamIN = 4;
         public static final int const_Ball1Input = 0; //set
-        public static final int const_Ball2Input = 0; //set
-        public static final double const_ConveyerSpeedPercent = .5; //set
+        public static final int const_Ball2Input = 1; //set
+        public static final double const_ConveyerSpeedPercent = .75; //set
         public static final double const_IntakeSpeedPercent = .5; //set
+
+        public static final int const_TopMotor1Id = 9; 
+        public static final int const_BottomMotor1Id  = 11;
+        public static final int const_TopMotor2Id  = 7; 
+        public static final int const_BottomMotor2Id  = 8;
+        
+        public static final int const_IntakeAngleMotorId  = 15; 
+        public static final int const_IntakeDriveMotorId  = 6; 
+
+        public static final int const_HoodAngleMotorId  = 17; 
+        public static final int const_HoodDriveMotorId  = 10; 
+
+        public static final boolean const_IntakeAngleMotorReversed = false; 
+        public static final boolean const_IntakeDriveMotorReversed = true; 
+        public static final boolean const_HoodAngleMotorReversed = true; 
+        public static final boolean const_HoodDriveMotorReversed = true; 
+        public static final boolean const_TopMotor1Reversed = true; 
+        public static final boolean const_BottomMotor1Reversed = true; 
+        public static final boolean const_TopMotor2Reversed = true; 
+        public static final boolean const_BottomMotor2Reversed = true; 
     }
 
     public static final class DriveConstants {
@@ -59,44 +85,45 @@ public class Constants {
             public static final boolean const_DriveMotorReversed = false;
             public static final int const_AbsoluteEncoderPort = 0;
             public static final boolean const_AbsoluteEncoderReversed = false;
-            public static final double const_AbsoluteEncoderOffsetRad = 1.49;
+            public static final double const_AbsoluteEncoderOffsetRad = 1.49-.325;
         }
         public static final class Swerve_FR {
+            public static final int const_DriveMotorPort = 1;
+            public static final int const_TurningMotorPort = 12;
+            public static final boolean const_TurningMotorReversed = true;
+            public static final boolean const_DriveMotorReversed = true;
+            public static final int const_AbsoluteEncoderPort = 3;
+            public static final boolean const_AbsoluteEncoderReversed = false;
+            public static final double const_AbsoluteEncoderOffsetRad = 1.744-3.01;
+        }
+        public static final class Swerve_BL {
             public static final int const_DriveMotorPort = 3;
             public static final int const_TurningMotorPort = 16;
             public static final boolean const_TurningMotorReversed = true;
             public static final boolean const_DriveMotorReversed = false;
             public static final int const_AbsoluteEncoderPort = 1;
             public static final boolean const_AbsoluteEncoderReversed = false;
-            public static final double const_AbsoluteEncoderOffsetRad = 4.43;
-        }
-        public static final class Swerve_BL {
-            public static final int const_DriveMotorPort = 1;
-            public static final int const_TurningMotorPort = 5;
-            public static final boolean const_TurningMotorReversed = true;
-            public static final boolean const_DriveMotorReversed = false;
-            public static final int const_AbsoluteEncoderPort = 3;
-            public static final boolean const_AbsoluteEncoderReversed = false;
-            public static final double const_AbsoluteEncoderOffsetRad = 1.744;
+            public static final double const_AbsoluteEncoderOffsetRad = 4.43-1.407;
         }
         public static final class Swerve_BR {
             public static final int const_DriveMotorPort = 4;
-            public static final int const_TurningMotorPort = 12;
+            public static final int const_TurningMotorPort = 5;
             public static final boolean const_TurningMotorReversed = true;
-            public static final boolean const_DriveMotorReversed = false;
+            public static final boolean const_DriveMotorReversed = true;
             public static final int const_AbsoluteEncoderPort = 2;
             public static final boolean const_AbsoluteEncoderReversed = false;
-            public static final double const_AbsoluteEncoderOffsetRad = .678;
+            public static final double const_AbsoluteEncoderOffsetRad = .678+1.730;
         }
 
 
-        public static final double const_PhysicalMaxSpeedMetersPerSecond = 8;
-        public static final double const_PhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+        public static final double const_PhysicalMaxSpeedMetersPerSecond = 4;
+        public static final double const_PhysicalMaxAngularSpeedRadiansPerSecond = Math.PI;
 
-        public static final double const_TeleDriveMaxSpeedMetersPerSecond = const_PhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double const_TeleDriveMaxAngularSpeedRadiansPerSecond = const_PhysicalMaxAngularSpeedRadiansPerSecond/4 ;
+        public static final double const_TeleDriveMaxSpeedMetersPerSecond = const_PhysicalMaxSpeedMetersPerSecond /2;
+        public static final double const_TeleDriveMaxAngularSpeedRadiansPerSecond = const_PhysicalMaxAngularSpeedRadiansPerSecond /2;
+        
         public static final double const_TeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double const_TeleDriveMaxAngularAccelerationUnitsPerSecond = 6;
+        public static final double const_TeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
     }
 
     /**public static final class AutoConstants {
@@ -123,7 +150,7 @@ public class Constants {
         public static final int const_DriverRotAxis = 2;
         
 
-        public static final double const_Deadband = 0.05;
+        public static final double const_Deadband = 0.1;
     }
 
 }
